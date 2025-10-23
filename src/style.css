@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply text-gray-100;
+    background: #0D0D0D;
+    position: relative;
+  }
+  
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 50% 20%, rgba(123, 44, 191, 0.4), transparent 50%),
+      radial-gradient(circle at 20% 80%, rgba(79, 70, 229, 0.35), transparent 50%),
+      radial-gradient(circle at 80% 60%, rgba(139, 92, 246, 0.3), transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  #app {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-6 py-2.5 bg-entain-purple text-white font-semibold rounded-lg 
+           hover:bg-entain-purple-light transition-all duration-200 shadow-lg;
+  }
+  
+  .btn-filter {
+    @apply px-4 py-2 font-semibold rounded-lg border-2 transition-all duration-200;
+  }
+  
+  .btn-filter-active {
+    @apply bg-entain-purple text-white border-entain-purple shadow-lg shadow-entain-purple/30;
+  }
+  
+  .btn-filter-inactive {
+    @apply bg-entain-dark text-gray-300 border-entain-gray hover:border-entain-purple hover:text-white;
+  }
+  
+  .race-card {
+    @apply rounded-2xl shadow-lg p-6 transition-all duration-300 border;
+    background: rgba(26, 26, 26, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+  }
+  
+  .race-card:hover {
+    background: rgba(30, 30, 40, 0.7);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(139, 92, 246, 0.3);
+    border-color: rgba(139, 92, 246, 0.3);
+  }
+}
+
