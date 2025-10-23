@@ -1,10 +1,12 @@
 <template>
   <div id="app" class="min-h-screen bg-entain-darker flex flex-col">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <!-- Header -->
-    <header class="bg-gradient-to-r from-entain-purple-dark via-entain-purple to-entain-purple-dark text-white shadow-2xl shadow-entain-purple/30">
+    <header role="banner" class="bg-gradient-to-r from-entain-purple-dark via-entain-purple to-entain-purple-dark text-white shadow-2xl shadow-entain-purple/30">
       <div class="container mx-auto px-4 py-8">
         <h1 class="text-4xl font-bold flex items-center gap-3">
-          <span class="text-entain-accent">🏁</span>
+          <span class="text-entain-accent" aria-hidden="true">🏁</span>
           <span>Next to Go</span>
         </h1>
         <p class="text-purple-200 mt-2 text-lg">Live racing updates</p>
@@ -12,22 +14,26 @@
     </header>
 
     <!-- Main Content -->
-    <main class="container mx-auto px-4 py-8 flex-1">
+    <main id="main-content" role="main" aria-label="Next to Go Races" class="container mx-auto px-4 py-8 flex-1">
       <!-- Category Filter -->
-      <div class="bg-entain-dark rounded-lg shadow-xl shadow-entain-purple/10 p-6 mb-8 border border-entain-gray">
+      <section aria-label="Race category filters" class="bg-entain-dark rounded-lg shadow-xl shadow-entain-purple/10 p-6 mb-8 border border-entain-gray">
         <CategoryFilter />
-      </div>
+      </section>
 
       <!-- Loading State -->
-      <div v-if="loading && races.length === 0" class="text-center py-12">
-        <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-entain-purple"></div>
+      <div v-if="loading && races.length === 0" role="status" aria-live="polite" class="text-center py-12">
+        <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-entain-purple" aria-hidden="true"></div>
         <p class="mt-4 text-gray-300">Loading races...</p>
       </div>
 
       <!-- Error State -->
-      <div v-else-if="error" class="bg-red-900/20 border-2 border-red-500 rounded-lg p-6 text-center">
+      <div v-else-if="error" role="alert" aria-live="assertive" class="bg-red-900/20 border-2 border-red-500 rounded-lg p-6 text-center">
         <p class="text-red-400 font-semibold">{{ error }}</p>
-        <button @click="loadRaces" class="btn-primary mt-4">
+        <button 
+          @click="loadRaces" 
+          class="btn-primary mt-4"
+          aria-label="Retry loading race data"
+        >
           Try Again
         </button>
       </div>
@@ -42,14 +48,16 @@
             @click="loadRaces" 
             class="text-entain-accent hover:text-entain-purple-light flex items-center gap-2 transition-colors"
             :disabled="loading"
+            :aria-disabled="loading"
+            aria-label="Refresh race data"
           >
-            <span v-if="!loading">🔄</span>
-            <span v-else class="inline-block animate-spin">⟳</span>
+            <span v-if="!loading" aria-hidden="true">🔄</span>
+            <span v-else class="inline-block animate-spin" aria-hidden="true">⟳</span>
             <span class="font-semibold">Refresh</span>
           </button>
         </div>
 
-        <TransitionGroup name="race-list" tag="div" class="space-y-4">
+        <TransitionGroup name="race-list" tag="div" class="space-y-4" role="list">
           <RaceCard 
             v-for="race in races" 
             :key="race.id" 
@@ -63,6 +71,12 @@
         <p class="text-gray-300 text-lg">No races available for the selected categories</p>
         <p class="text-gray-500 mt-2">Try selecting different categories</p>
       </div>
+      
+      <!-- Live region for auto-refresh announcements -->
+      <div role="status" aria-live="polite" aria-atomic="true" class="sr-only">
+        <span v-if="loading && races.length > 0">Loading updated race information...</span>
+        <span v-else-if="lastFetchTime">Race data updated at {{ formatTime(lastFetchTime) }}</span>
+      </div>
 
       <!-- Auto-refresh indicator -->
       <div class="mt-8 text-center text-sm text-gray-500">
@@ -74,7 +88,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gradient-to-r from-entain-purple-dark via-entain-purple to-entain-purple-dark text-gray-300 py-8 mt-auto shadow-2xl shadow-entain-purple/20">
+    <footer role="contentinfo" class="bg-gradient-to-r from-entain-purple-dark via-entain-purple to-entain-purple-dark text-gray-300 py-8 mt-auto shadow-2xl shadow-entain-purple/20">
       <div class="container mx-auto px-4 text-center">
         <p class="text-purple-200">&copy; 2025 Entain - Next to Go Racing</p>
       </div>

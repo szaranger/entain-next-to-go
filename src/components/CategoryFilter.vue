@@ -2,7 +2,7 @@
   <div class="category-filter">
     <h2 class="text-xl font-bold mb-6 text-white border-l-4 border-entain-purple pl-4">Filter by Category</h2>
     
-    <div class="flex flex-wrap gap-3">
+    <div class="flex flex-wrap gap-3" role="group" aria-label="Race category filter buttons">
       <button
         v-for="category in categories"
         :key="category.id"
@@ -11,8 +11,11 @@
           'btn-filter',
           isSelected(category.id) ? 'btn-filter-active' : 'btn-filter-inactive'
         ]"
+        :aria-pressed="isSelected(category.id)"
+        :aria-label="`Filter by ${category.name} races, ${isSelected(category.id) ? 'currently selected' : 'not selected'}`"
+        type="button"
       >
-        <span class="mr-2 text-lg">{{ category.icon }}</span>
+        <span class="mr-2 text-lg" aria-hidden="true">{{ category.icon }}</span>
         <span>{{ category.name }}</span>
       </button>
     </div>

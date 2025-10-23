@@ -1,6 +1,12 @@
 <template>
   <div class="countdown-timer">
     <span 
+      role="timer"
+      aria-live="off"
+      aria-atomic="true"
+      :aria-label="timeRemaining <= 60 
+        ? `Urgent: Race starts in ${formattedTime}` 
+        : `Race starts in ${formattedTime}`"
       :class="[
         'font-mono font-bold text-xl px-4 py-2 rounded-lg',
         timeRemaining <= 60 

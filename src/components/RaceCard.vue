@@ -1,10 +1,15 @@
 <template>
-  <div class="race-card group">
+  <article 
+    class="race-card group" 
+    role="listitem"
+    :aria-label="`${categoryName} race at ${race.meetingName}, race number ${race.raceNumber}`"
+  >
     <div class="flex justify-between items-start">
       <div class="flex-1">
         <div class="flex items-center gap-3 mb-3">
-          <span class="text-3xl">{{ categoryIcon }}</span>
+          <span class="text-3xl" aria-hidden="true">{{ categoryIcon }}</span>
           <h3 class="text-xl font-bold text-white group-hover:text-entain-accent transition-colors">
+            <span class="sr-only">{{ categoryName }} race: </span>
             {{ race.meetingName }}
           </h3>
         </div>
@@ -18,8 +23,11 @@
           </div>
           
           <div v-if="race.venueName" class="flex items-center gap-2">
-            <span>📍</span>
-            <span class="text-gray-300">{{ race.venueName }}</span>
+            <span aria-hidden="true">📍</span>
+            <span class="text-gray-300">
+              <span class="sr-only">Location: </span>
+              {{ race.venueName }}
+            </span>
             <span v-if="race.venueState" class="text-gray-500">
               ({{ race.venueState }})
             </span>
@@ -31,7 +39,7 @@
         <CountdownTimer :target-time="race.advertisedStart" />
       </div>
     </div>
-  </div>
+  </article>
 </template>
 
 <script setup lang="ts">
@@ -51,6 +59,11 @@ const raceStore = useRaceStore();
 const categoryIcon = computed<string>(() => {
   const category = raceStore.getCategoryById(props.race.categoryId);
   return category?.icon || '🏁';
+});
+
+const categoryName = computed<string>(() => {
+  const category = raceStore.getCategoryById(props.race.categoryId);
+  return category?.name || 'Racing';
 });
 </script>
 

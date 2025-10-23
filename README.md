@@ -139,6 +139,12 @@ The application uses Pinia for centralized state management with the following f
 - `isCategorySelected(id)`: Check if category is active
 - `getCategoryById(id)`: Get category details
 
+## Accessibility
+
+This project attempt to meet WCAG 2.1 Level AA standards.
+
+
+
 ## Testing
 
 This project includes a comprehensive test suite using **Vitest** with excellent coverage across all components, services, and state management.
@@ -159,7 +165,9 @@ npm run test:ui
 npm run test:coverage
 ```
 
+## AI usage
 
+ChatGPT has been referred for some of the issues I encountered given my limited knowledge of Vue
 
 
 

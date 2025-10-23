@@ -65,3 +65,55 @@
   }
 }
 
+@layer utilities {
+  /* Screen reader only utility - hide visually but keep accessible */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+  
+  /* Make screen reader only content visible when focused */
+  .sr-only:focus,
+  .focus\:not-sr-only:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: inherit;
+    margin: inherit;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+  
+  /* Skip navigation link styles */
+  .skip-link {
+    @apply sr-only focus:not-sr-only;
+    @apply fixed top-0 left-0 z-50;
+    @apply bg-entain-purple text-white px-6 py-3 rounded-br-lg;
+    @apply font-semibold shadow-lg;
+  }
+  
+  /* High contrast focus indicators for accessibility */
+  .btn-primary:focus-visible,
+  .btn-filter:focus-visible,
+  button:focus-visible,
+  a:focus-visible {
+    outline: 3px solid #FFD700;
+    outline-offset: 2px;
+  }
+  
+  /* Ensure disabled buttons are clearly indicated */
+  button:disabled,
+  button[aria-disabled="true"] {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
